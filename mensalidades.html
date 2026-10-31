@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mensalidades - Pernambuco Fight Team</title>
+<meta name="theme-color" content="#000000">
+<meta name="referrer" content="no-referrer">
+<style>
+:root{color-scheme:dark;--bg:#000;--card:rgba(15,15,15,.88);--tx:#f8fafc;--mu:#9ca3af;--bd:#262626;--pr:#16a34a;--ok:#22c55e;--okbg:rgba(34,197,94,.18);--pdbg:rgba(22,163,74,.14);--in:rgba(0,0,0,.75);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%;background:var(--bg)}
+body{background:var(--bg);color:var(--tx);padding:12px;display:flex;justify-content:center;min-height:100vh;position:relative;overflow-x:hidden}
+.bg-watermark{position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,rgba(22,163,74,.16),transparent 60%);pointer-events:none;z-index:0}
+.wrap{width:100%;max-width:820px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0}
+h1{font-size:1.25rem;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+.subhead{font-size:.75rem;color:var(--mu);font-weight:500;margin-top:2px}
+.tag{display:inline-block;background:var(--pr);color:#fff;font-size:.65rem;padding:3px 8px;border-radius:99px;font-weight:700;text-transform:uppercase}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab,.btn{border:1px solid var(--bd);background:var(--card);color:var(--mu);padding:0 14px;min-height:42px;border-radius:10px;font-weight:600;cursor:pointer;white-space:nowrap;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center}
+.tab.on{background:var(--pr);border-color:var(--pr);color:#fff}
+.month-bar,.box,form,.row{background:var(--card);border:1px solid var(--bd);border-radius:12px}
+.month-bar{padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.month-nav{display:flex;gap:6px}
+.month-nav button{background:var(--in);border:1px solid var(--bd);color:var(--tx);border-radius:8px;width:36px;height:36px;font-weight:700;cursor:pointer}
+.month-bar input[type=month]{background:var(--in);border:1px solid var(--bd);color:var(--tx);padding:4px 10px;border-radius:8px;font-weight:600;font-size:.9rem;min-height:36px;width:auto}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.box{padding:10px;min-width:0}
+.box small{color:var(--mu);font-size:.64rem;text-transform:uppercase;letter-spacing:.03em}
+.box b{display:block;font-size:.95rem;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ok{color:var(--ok)}.pd{color:var(--pr)}
+form{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
+form label:nth-child(1),form label:nth-child(2),form .go{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:4px;font-size:.72rem;color:var(--mu);min-width:0}
+input,select{background:var(--in);border:1px solid var(--bd);color:var(--tx);padding:0 10px;min-height:46px;border-radius:10px;font-size:16px;width:100%}
+.go{background:var(--ok);color:#fff;border:0;border-radius:10px;min-height:48px;font-size:1rem;font-weight:700;cursor:pointer}
+.list{display:flex;flex-direction:column;gap:10px}
+.row{padding:12px;display:grid;grid-template-columns:104px 1fr auto;grid-template-areas:"n n s" "v a a";gap:10px;align-items:center}
+.row>div:first-child{grid-area:n;min-width:0}
+.row .vli{grid-area:v}.row .st{grid-area:s}.row .acts{grid-area:a}
+.nmi{font-weight:700;font-size:1rem;background:transparent;border:0;border-bottom:1px dashed var(--bd);border-radius:0;padding:4px 0;min-height:36px;color:var(--tx);width:100%}
+.row .meta{color:var(--mu);font-size:.78rem;margin-top:2px}
+.st{font-size:.72rem;font-weight:700;padding:0 12px;min-height:36px;border-radius:8px;border:0;cursor:pointer;background:var(--pdbg);color:var(--pr)}
+.st.p{background:var(--okbg);color:var(--ok)}
+.vli{font-weight:700;text-align:right;padding:0 10px;min-height:44px}
+.acts{display:flex;gap:6px}
+.acts button{flex:1;display:flex;align-items:center;justify-content:center;font-size:.8rem;min-height:44px;border:1px solid var(--bd);background:transparent;color:var(--tx);border-radius:8px;padding:0 8px;cursor:pointer}
+.acts .del{color:var(--pr)}
+.empty{text-align:center;color:var(--mu);padding:28px 16px;font-size:.9rem;background:var(--card);border:1px dashed var(--bd);border-radius:12px}
+.toast-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:16px;z-index:999}
+.toast-box{background:#0f0f0f;border:1px solid var(--bd);border-radius:14px;padding:18px;max-width:340px;width:100%;display:flex;flex-direction:column;gap:12px}
+.toast-title{font-weight:700;font-size:1rem}
+.toast-msg{font-size:.85rem;color:var(--mu);line-height:1.4}
+.toast-actions{display:flex;gap:8px;justify-content:flex-end}
+@media(min-width:640px){body{padding:16px}h1{font-size:1.4rem}.box b{font-size:1.1rem}form{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}form label:nth-child(1),form label:nth-child(2),form .go{grid-column:auto}.row{grid-template-columns:1fr 110px auto auto;grid-template-areas:"n v s a"}.acts button{flex:none;min-height:36px}}
+</style>
+</head>
+<body>
+<div class="bg-watermark"></div>
+<div class="wrap">
+  <header>
+    <div><h1>Pernambuco Fight Team</h1><div class="subhead">Muay Thai • Jiu-Jitsu</div></div>
+    <span class="tag" id="activeCounterTag">0 ALUNOS</span>
+  </header>
+
+  <div class="month-bar">
+    <div class="month-nav">
+      <button type="button" onclick="changeMonth(-1)" title="Mês anterior">&lt;</button>
+      <button type="button" onclick="changeMonth(1)" title="Mês seguinte">&gt;</button>
+    </div>
+    <label style="flex-direction:row;align-items:center;gap:8px;">
+      <span style="font-size:.8rem;font-weight:600;color:var(--tx);">Mês:</span>
+      <input type="month" id="monthPicker" onchange="onMonthChange(this.value)">
+    </label>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab on" data-filter="all" onclick="setFilter('all')">Todos</button>
+    <button class="tab" data-filter="pending" onclick="setFilter('pending')">Pendentes</button>
+    <button class="tab" data-filter="paid" onclick="setFilter('paid')">Pagos</button>
+    <button class="btn" onclick="exportData()">⬇ CSV</button>
+    <button class="btn" onclick="backupDatabase()">💾 Backup</button>
+    <button class="btn" onclick="document.getElementById('restoreFileInput').click()">📂 Restaurar</button>
+    <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreDatabase(event)">
+    <button class="btn" onclick="openClearModal()">🗑 Limpar</button>
+  </nav>
+
+  <section class="sum">
+    <div class="box"><small>Total Alunos</small><b id="totalCount">0</b></div>
+    <div class="box"><small>Recebido</small><b class="ok" id="totalPaid">R$ 0,00</b></div>
+    <div class="box"><small>Pendente</small><b class="pd" id="totalPending">R$ 0,00</b></div>
+  </section>
+
+  <form id="studentForm" onsubmit="handleAddStudent(event)">
+    <label>Nome do Aluno<input type="text" id="inputName" placeholder="Ex: Rodrigo Santana" required maxlength="80" autocomplete="off"></label>
+    <label>WhatsApp (com DDD)<input type="tel" id="inputPhone" placeholder="Ex: 81988887777" autocomplete="off"></label>
+    <label>Vencimento<input type="date" id="inputDueDate" required></label>
+    <label>Valor (R$)<input type="number" id="inputValue" step="0.01" min="0" max="9999999" placeholder="150.00" required></label>
+    <button type="submit" class="go">+ Registrar</button>
+  </form>
+
+  <section class="list" id="studentList"></section>
+
+  <section class="box" style="padding:14px;display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <b style="font-size:.95rem;margin:0;">📊 Comparativo de Faturamento Anual</b>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <label for="chartYearSelect" style="font-size:.75rem;">Ano:</label>
+        <select id="chartYearSelect" style="min-height:34px;padding:0 8px;font-size:.85rem;width:auto;" onchange="onChartYearChange(this.value)"></select>
+      </div>
+    </div>
+    <div id="bestMonthBadge" style="display:none;background:var(--okbg);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:8px 12px;font-size:.8rem;color:var(--ok);">
+      🏆 <strong>Maior faturamento:</strong> <span id="bestMonthText">--</span>
+    </div>
+    <div style="position:relative;width:100%;height:220px;"><canvas id="revenueChart"></canvas></div>
+  </section>
+</div>
+
+<div id="pwOverlay" class="toast-overlay" style="z-index:900;background:#000;">
+  <div class="toast-box">
+    <div class="toast-title" id="pwTitle"></div>
+    <div class="toast-msg" id="pwMsg"></div>
+    <input type="password" id="pwInput" placeholder="Senha" maxlength="64" autocomplete="current-password">
+    <div class="toast-msg" id="pwErr" style="color:#ef4444;min-height:1em"></div>
+    <div class="toast-actions">
+      <button class="btn" id="pwReset" style="display:none">Esqueci a senha</button>
+      <button class="btn" id="pwCancel" style="display:none">Cancelar</button>
+      <button class="btn" id="pwOk" style="background:var(--ok);color:#fff;border-color:var(--ok);">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<div id="customModal" class="toast-overlay">
+  <div class="toast-box">
+    <div class="toast-title" id="modalTitle">Confirmação</div>
+    <div class="toast-msg" id="modalMsg"></div>
+    <div class="toast-actions">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn" id="modalConfirmBtn" style="background:var(--ok);color:#fff;border-color:var(--ok);">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const STORAGE_KEY='mensalidades_alunos_app_v2';
+let currentFilter='all',currentMonth='',chartYear='',chartInstance=null,students=[];
+let downloadsApi=null;
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const now=new Date(),yr=String(now.getFullYear()),mo=String(now.getMonth()+1).padStart(2,'0');
+  currentMonth=`${yr}-${mo}`;chartYear=yr;
+  document.getElementById('monthPicker').value=currentMonth;
+  document.getElementById('inputDueDate').value=`${currentMonth}-${String(now.getDate()).padStart(2,'0')}`;
+  loadData();
+  try{if(window.claude&&claude.use){claude.use('downloads').then(d=>{downloadsApi=d}).catch(()=>{})}}catch(e){}
+});
+
+async function saveFile(filename,content,mime){
+  const blob=new Blob([content],{type:mime});
+  if(downloadsApi){
+    try{await downloadsApi.save({filename,data:blob});return}catch(e){if(e&&e.code==='declined')return}
+  }
+  try{
+    const url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);
+  }catch(e){}
+}
+
+async function backupDatabase(){
+  saveFile(`backup_pft_${new Date().toISOString().slice(0,10)}.json`,JSON.stringify({students,exportedAt:new Date().toISOString()},null,2),'application/json');
+}
+
+function restoreDatabase(event){
+  const file=event.target.files&&event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  if(file.size>5e6){event.target.value='';showModal({title:'Arquivo muito grande',message:'O backup deve ter menos de 5 MB.',onConfirm:()=>{}});return}
+  reader.onload=async e=>{
+    try{
+      const parsed=JSON.parse(e.target.result);
+      let list;
+      if(parsed&&parsed.v===3){
+        const p=await pwDialog({title:'Backup protegido',msg:'Digite a senha usada neste backup.',cancelable:true,okLabel:'Restaurar',validate:async pw=>{try{list=sanitizeStudents(JSON.parse(await decryptWith(await deriveKey(pw,unb64(parsed.salt)),parsed)));return null}catch(x){return 'Senha incorreta.'}}});
+        if(p===null){event.target.value='';return}
+      }else if(parsed&&Array.isArray(parsed.students)){list=sanitizeStudents(parsed.students)}
+      else throw new Error('x');
+      students=list;saveData();populateYearSelector();render();
+      showModal({title:'Cópia restaurada',message:'Seus dados foram importados com sucesso!',onConfirm:()=>{}});
+    }catch(err){
+      showModal({title:'Erro ao restaurar',message:'O arquivo selecionado não é válido.',onConfirm:()=>{}});
+    }
+    event.target.value='';
+  };
+  reader.readAsText(file);
+}
+
+function populateYearSelector(){
+  const sel=document.getElementById('chartYearSelect');
+  const years=new Set([String(new Date().getFullYear()),chartYear]);
+  students.forEach(s=>{if(s.dueDate&&s.dueDate.length>=4)years.add(s.dueDate.substring(0,4))});
+  sel.innerHTML='';
+  Array.from(years).sort((a,b)=>b.localeCompare(a)).forEach(y=>{
+    const o=document.createElement('option');o.value=y;o.textContent=y;if(y===chartYear)o.selected=true;sel.appendChild(o);
+  });
+}
+function onChartYearChange(v){chartYear=v;renderChart()}
+
+function renderChart(){
+  const canvas=document.getElementById('revenueChart');
+  if(!canvas||typeof Chart==='undefined')return;
+  const names=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const paid=new Array(12).fill(0),pend=new Array(12).fill(0);
+  students.forEach(s=>{
+    if(!s.dueDate||!s.dueDate.startsWith(chartYear))return;
+    const i=parseInt(s.dueDate.split('-')[1],10)-1,v=parseFloat(s.value)||0;
+    if(i>=0&&i<12){s.paid?paid[i]+=v:pend[i]+=v}
+  });
+  let max=0,mi=-1;
+  paid.forEach((a,i)=>{if(a>max){max=a;mi=i}});
+  const badge=document.getElementById('bestMonthBadge');
+  if(max>0){badge.style.display='block';document.getElementById('bestMonthText').textContent=`${names[mi]}/${chartYear} com ${formatCurrency(max)} faturados`}
+  else badge.style.display='none';
+  const colors=paid.map((a,i)=>(a>0&&i===mi)?'#22c55e':'rgba(34,197,94,.45)');
+  if(chartInstance)chartInstance.destroy();
+  chartInstance=new Chart(canvas.getContext('2d'),{
+    type:'bar',
+    data:{labels:names,datasets:[
+      {label:'Recebido (R$)',data:paid,backgroundColor:colors,borderColor:'#22c55e',borderWidth:1,borderRadius:6},
+      {label:'Pendente (R$)',data:pend,backgroundColor:'rgba(239,68,68,.35)',borderColor:'#ef4444',borderWidth:1,borderRadius:6}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#9ca3af',font:{size:11},boxWidth:12}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${formatCurrency(c.raw)}`}}},
+      scales:{x:{grid:{color:'#262626'},ticks:{color:'#9ca3af',font:{size:11}}},y:{grid:{color:'#262626'},ticks:{color:'#9ca3af',font:{size:10},callback:v=>'R$ '+v}}}}
+  });
+}
+
+function changeMonth(off){
+  let [y,m]=currentMonth.split('-').map(n=>parseInt(n,10));
+  m+=off;if(m>12){m=1;y++}else if(m<1){m=12;y--}
+  currentMonth=`${y}-${String(m).padStart(2,'0')}`;
+  document.getElementById('monthPicker').value=currentMonth;
+  if(String(y)!==chartYear){chartYear=String(y);populateYearSelector()}
+  const di=document.getElementById('inputDueDate');
+  if(di&&di.value){di.value=`${currentMonth}-${di.value.split('-')[2]||'10'}`}
+  render();
+}
+function onMonthChange(v){
+  if(!v)return;
+  currentMonth=v;const yr=v.split('-')[0];
+  if(yr!==chartYear){chartYear=yr;populateYearSelector()}
+  render();
+}
+function getMonthStudents(){return students.filter(s=>s.dueDate&&s.dueDate.startsWith(currentMonth))}
+
+const STORAGE_KEY_NOTE='dados ficam apenas neste aparelho';
+const VAULT_KEY='pft_vault_v3';
+const $=id=>document.getElementById(id);
+let vault=null,failCount=0,lockUntil=0;
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function deriveKey(pw,salt){
+  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:600000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+}
+async function decryptWith(key,o){
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(o.iv)},key,unb64(o.ct));
+  return new TextDecoder().decode(pt);
+}
+function sanitizeStudents(arr){
+  if(!Array.isArray(arr))throw new Error('formato');
+  const out=[];
+  arr.slice(0,5000).forEach(s=>{
+    if(!s||typeof s!=='object')return;
+    const dueDate=String(s.dueDate||'');
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(dueDate))return;
+    const v=Number(s.value);
+    out.push({id:String(s.id||(Date.now()+'-'+Math.random())).slice(0,40),name:String(s.name||'').trim().slice(0,80)||'Sem nome',phone:String(s.phone||'').replace(/\D/g,'').slice(0,13),dueDate,value:(isFinite(v)&&v>=0&&v<1e7)?v:0,paid:s.paid===true});
+  });
+  return out;
+}
+function pwDialog({title,msg,okLabel='Entrar',showReset=false,cancelable=false,validate}){
+  return new Promise(res=>{
+    const ov=$('pwOverlay'),i1=$('pwInput'),err=$('pwErr'),ok=$('pwOk'),cn=$('pwCancel'),rs=$('pwReset');
+    $('pwTitle').textContent=title;$('pwMsg').textContent=msg;err.textContent='';
+    i1.value='';cn.style.display=cancelable?'':'none';rs.style.display=showReset?'':'none';ok.textContent=okLabel;
+    ov.style.display='flex';setTimeout(()=>i1.focus(),50);
+    const done=v=>{ov.style.display='none';ok.onclick=cn.onclick=rs.onclick=null;i1.onkeydown=null;i1.value='';res(v)};
+    const submit=async()=>{
+      const p=i1.value;
+      if(p.length<6){err.textContent='Use pelo menos 6 caracteres.';return}
+      ok.disabled=true;
+      const e=validate?await validate(p):null;
+      ok.disabled=false;
+      if(e){err.textContent=e;i1.value='';i1.focus();return}
+      done(p);
+    };
+    ok.onclick=submit;cn.onclick=()=>done(null);rs.onclick=resetVault;
+    i1.onkeydown=e=>{if(e.key==='Enter')submit()};
+  });
+}
+async function tryUnlock(pw){
+  const wait=lockUntil-Date.now();
+  if(wait>0)return `Muitas tentativas. Aguarde ${Math.ceil(wait/1000)}s.`;
+  try{
+    const k=await deriveKey(pw,unb64(vault.salt));
+    students=sanitizeStudents(JSON.parse(await decryptWith(k,vault)));
+    failCount=0;return null;
+  }catch(e){
+    failCount++;
+    if(failCount>=5)lockUntil=Date.now()+Math.min(300000,30000*(failCount-4));
+    return 'Senha incorreta.';
+  }
+}
+function resetVault(){
+  showModal({title:'Apagar dados antigos protegidos?',message:'Sem a senha antiga não é possível recuperar esses dados. Se tiver um backup, você poderá restaurá-lo depois.',onConfirm:()=>{
+    try{localStorage.removeItem(VAULT_KEY)}catch(e){}
+    vault=null;students=[];$('pwOverlay').style.display='none';populateYearSelector();render();
+  }});
+}
+async function loadData(){
+  try{const s=localStorage.getItem(STORAGE_KEY);if(s)students=sanitizeStudents(JSON.parse(s))}catch(e){students=[]}
+  let v=null;
+  try{const raw=localStorage.getItem(VAULT_KEY);if(raw){const o=JSON.parse(raw);if(o&&o.v===3&&o.salt&&o.iv&&o.ct)v=o}}catch(e){}
+  if(v&&!students.length){
+    vault=v;
+    await pwDialog({title:'Liberar dados antigos',msg:'Encontramos dados salvos com senha. Digite a senha uma última vez para passar a usar o app sem senha.',showReset:true,validate:tryUnlock});
+    saveData();
+    try{localStorage.removeItem(VAULT_KEY)}catch(e){}
+  }
+  populateYearSelector();render();
+}
+function saveData(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(students))}catch(e){console.error(e)}}
+function formatCurrency(v){return(Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function formatDate(d){if(!d)return'--/--/----';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d}
+
+function handleAddStudent(e){
+  e.preventDefault();
+  const n=document.getElementById('inputName'),p=document.getElementById('inputPhone'),d=document.getElementById('inputDueDate'),v=document.getElementById('inputValue');
+  const name=n.value.trim(),phone=p.value.replace(/\D/g,''),dueDate=d.value,value=parseFloat(v.value);
+  if(!name||isNaN(value)||value<0||value>=1e7||!dueDate)return;
+  if(phone&&(phone.length<10||phone.length>11)){showModal({title:'WhatsApp inválido',message:'Informe DDD + número (10 ou 11 dígitos).',onConfirm:()=>{}});return}
+  students.unshift({id:Date.now().toString(),name,phone,dueDate,value,paid:false});
+  saveData();
+  const mes=dueDate.slice(0,7);
+  if(mes!==currentMonth){currentMonth=mes;document.getElementById('monthPicker').value=mes;chartYear=mes.slice(0,4)}
+  populateYearSelector();render();
+  n.value='';p.value='';v.value='';n.focus();
+}
+function toggleStatus(id){const s=students.find(x=>x.id===id);if(s){s.paid=!s.paid;saveData();render()}}
+function handleNameUpdate(id,nn){const s=students.find(x=>x.id===id);if(s&&nn.trim()){s.name=nn.trim().slice(0,80);saveData();updateSummary()}}
+function handleValueUpdate(id,str){
+  const s=students.find(x=>x.id===id);
+  if(s){const num=parseFloat(str.replace(/[^0-9.,]/g,'').replace(',','.'));if(!isNaN(num)&&num>=0&&num<1e7){s.value=num;saveData()}render()}
+}
+
+function showModal({title,message,onConfirm}){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalMsg').textContent=message;
+  document.getElementById('modalConfirmBtn').onclick=()=>{onConfirm();closeModal()};
+  document.getElementById('customModal').style.display='flex';
+}
+function closeModal(){document.getElementById('customModal').style.display='none'}
+
+function deleteStudent(id){
+  const s=students.find(x=>x.id===id);
+  showModal({title:'Excluir aluno',message:`Tem certeza que deseja remover ${s?s.name:'este aluno'}?`,onConfirm:()=>{students=students.filter(x=>x.id!==id);saveData();populateYearSelector();render()}});
+}
+function openClearModal(){
+  const p=currentMonth.split('-');
+  showModal({title:'Limpar registros do mês',message:`Deseja excluir todos os alunos registrados no mês ${p[1]}/${p[0]}?`,onConfirm:()=>{students=students.filter(s=>!s.dueDate.startsWith(currentMonth));saveData();populateYearSelector();render()}});
+}
+
+function openWhatsApp(id){
+  const s=students.find(x=>x.id===id);
+  if(!s)return;
+  if(!s.phone){showModal({title:'Telefone não registrado',message:`O aluno ${s.name} não possui WhatsApp informado.`,onConfirm:()=>{}});return}
+  const val=formatCurrency(s.value),dt=formatDate(s.dueDate);
+  const text=s.paid
+    ?`Olá, ${s.name}! Confirmamos o recebimento da sua mensalidade no valor de ${val}. Muito obrigado!`
+    :`Olá, ${s.name}! Lembramos sobre a sua mensalidade de ${val} com vencimento em ${dt}. Caso já tenha efetuado o pagamento, por favor desconsidere.`;
+  window.open(`https://wa.me/55${s.phone.replace(/\D/g,'')}?text=${encodeURIComponent(text)}`,'_blank','noopener,noreferrer');
+}
+
+function setFilter(f){
+  currentFilter=f;
+  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.toggle('on',t.dataset.filter===f));
+  renderList();
+}
+
+function updateSummary(){
+  const data=getMonthStudents();let paid=0,pend=0;
+  data.forEach(s=>{const v=Number(s.value)||0;s.paid?paid+=v:pend+=v});
+  document.getElementById('totalCount').textContent=data.length;
+  document.getElementById('totalPaid').textContent=formatCurrency(paid);
+  document.getElementById('totalPending').textContent=formatCurrency(pend);
+  document.getElementById('activeCounterTag').textContent=`${data.length} ${data.length===1?'ALUNO':'ALUNOS'}`;
+}
+
+function renderList(){
+  const el=document.getElementById('studentList');el.innerHTML='';
+  let f=getMonthStudents();
+  if(currentFilter==='pending')f=f.filter(s=>!s.paid);else if(currentFilter==='paid')f=f.filter(s=>s.paid);
+  if(!f.length){
+    const e=document.createElement('div');e.className='empty';
+    const p=currentMonth.split('-');e.textContent=`Nenhum aluno registrado para o mês ${p[1]}/${p[0]}.`;
+    el.appendChild(e);return;
+  }
+  f.forEach(s=>{
+    const row=document.createElement('div');row.className='row';
+    const nd=document.createElement('div');
+    const ni=document.createElement('input');ni.className='nmi';ni.type='text';ni.value=s.name;
+    ni.addEventListener('change',e=>handleNameUpdate(s.id,e.target.value));
+    const meta=document.createElement('div');meta.className='meta';
+    meta.textContent=`Venc: ${formatDate(s.dueDate)}${s.phone?` • WhatsApp: ${s.phone}`:''}`;
+    nd.append(ni,meta);
+    const vi=document.createElement('input');vi.className='vli';vi.type='text';vi.value=formatCurrency(s.value);
+    vi.addEventListener('focus',e=>{e.target.value=s.value});
+    vi.addEventListener('blur',e=>handleValueUpdate(s.id,e.target.value));
+    const st=document.createElement('button');st.className=s.paid?'st p':'st';st.textContent=s.paid?'Pago':'Pendente';
+    st.onclick=()=>toggleStatus(s.id);
+    const acts=document.createElement('div');acts.className='acts';
+    const zap=document.createElement('button');zap.textContent='Cobrança';zap.onclick=()=>openWhatsApp(s.id);
+    const del=document.createElement('button');del.className='del';del.textContent='Excluir';del.onclick=()=>deleteStudent(s.id);
+    acts.append(zap,del);
+    row.append(nd,vi,st,acts);el.appendChild(row);
+  });
+}
+
+function render(){updateSummary();renderList();renderChart()}
+
+function exportData(){
+  const data=getMonthStudents();
+  if(!data.length){showModal({title:'Sem dados',message:'Não há registros neste mês para exportar.',onConfirm:()=>{}});return}
+  let csv='ID,Nome,WhatsApp,Vencimento,Valor,Status\n';
+  const cell=v=>{let t=String(v);if(/^[=+\-@\t\r]/.test(t))t="'"+t;return '"'+t.replace(/"/g,'""')+'"'};
+  data.forEach(s=>{csv+=[s.id,s.name,s.phone||'',s.dueDate,s.value,s.paid?'Pago':'Pendente'].map(cell).join(',')+'\n'});
+  saveFile(`mensalidades_${currentMonth}.csv`,csv,'text/csv;charset=utf-8;');
+}
+</script>
+</body>
+</html>
