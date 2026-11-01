@@ -1,443 +1,1118 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mensalidades - Pernambuco Fight Team</title>
-<meta name="theme-color" content="#000000">
-<meta name="referrer" content="no-referrer">
-<style>
-:root{color-scheme:dark;--bg:#000;--card:rgba(15,15,15,.88);--tx:#f8fafc;--mu:#9ca3af;--bd:#262626;--pr:#16a34a;--ok:#22c55e;--okbg:rgba(34,197,94,.18);--pdbg:rgba(22,163,74,.14);--in:rgba(0,0,0,.75);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
-html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%;background:var(--bg)}
-body{background:var(--bg);color:var(--tx);padding:12px;display:flex;justify-content:center;min-height:100vh;position:relative;overflow-x:hidden}
-.bg-watermark{position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,rgba(22,163,74,.16),transparent 60%);pointer-events:none;z-index:0}
-.wrap{width:100%;max-width:820px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1}
-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0}
-h1{font-size:1.25rem;line-height:1.2;font-weight:800;letter-spacing:-.02em}
-.subhead{font-size:.75rem;color:var(--mu);font-weight:500;margin-top:2px}
-.tag{display:inline-block;background:var(--pr);color:#fff;font-size:.65rem;padding:3px 8px;border-radius:99px;font-weight:700;text-transform:uppercase}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab,.btn{border:1px solid var(--bd);background:var(--card);color:var(--mu);padding:0 14px;min-height:42px;border-radius:10px;font-weight:600;cursor:pointer;white-space:nowrap;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center}
-.tab.on{background:var(--pr);border-color:var(--pr);color:#fff}
-.month-bar,.box,form,.row{background:var(--card);border:1px solid var(--bd);border-radius:12px}
-.month-bar{padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.month-nav{display:flex;gap:6px}
-.month-nav button{background:var(--in);border:1px solid var(--bd);color:var(--tx);border-radius:8px;width:36px;height:36px;font-weight:700;cursor:pointer}
-.month-bar input[type=month]{background:var(--in);border:1px solid var(--bd);color:var(--tx);padding:4px 10px;border-radius:8px;font-weight:600;font-size:.9rem;min-height:36px;width:auto}
-.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.box{padding:10px;min-width:0}
-.box small{color:var(--mu);font-size:.64rem;text-transform:uppercase;letter-spacing:.03em}
-.box b{display:block;font-size:.95rem;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ok{color:var(--ok)}.pd{color:var(--pr)}
-form{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
-form label:nth-child(1),form label:nth-child(2),form .go{grid-column:1/-1}
-label{display:flex;flex-direction:column;gap:4px;font-size:.72rem;color:var(--mu);min-width:0}
-input,select{background:var(--in);border:1px solid var(--bd);color:var(--tx);padding:0 10px;min-height:46px;border-radius:10px;font-size:16px;width:100%}
-.go{background:var(--ok);color:#fff;border:0;border-radius:10px;min-height:48px;font-size:1rem;font-weight:700;cursor:pointer}
-.list{display:flex;flex-direction:column;gap:10px}
-.row{padding:12px;display:grid;grid-template-columns:104px 1fr auto;grid-template-areas:"n n s" "v a a";gap:10px;align-items:center}
-.row>div:first-child{grid-area:n;min-width:0}
-.row .vli{grid-area:v}.row .st{grid-area:s}.row .acts{grid-area:a}
-.nmi{font-weight:700;font-size:1rem;background:transparent;border:0;border-bottom:1px dashed var(--bd);border-radius:0;padding:4px 0;min-height:36px;color:var(--tx);width:100%}
-.row .meta{color:var(--mu);font-size:.78rem;margin-top:2px}
-.st{font-size:.72rem;font-weight:700;padding:0 12px;min-height:36px;border-radius:8px;border:0;cursor:pointer;background:var(--pdbg);color:var(--pr)}
-.st.p{background:var(--okbg);color:var(--ok)}
-.vli{font-weight:700;text-align:right;padding:0 10px;min-height:44px}
-.acts{display:flex;gap:6px}
-.acts button{flex:1;display:flex;align-items:center;justify-content:center;font-size:.8rem;min-height:44px;border:1px solid var(--bd);background:transparent;color:var(--tx);border-radius:8px;padding:0 8px;cursor:pointer}
-.acts .del{color:var(--pr)}
-.empty{text-align:center;color:var(--mu);padding:28px 16px;font-size:.9rem;background:var(--card);border:1px dashed var(--bd);border-radius:12px}
-.toast-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:16px;z-index:999}
-.toast-box{background:#0f0f0f;border:1px solid var(--bd);border-radius:14px;padding:18px;max-width:340px;width:100%;display:flex;flex-direction:column;gap:12px}
-.toast-title{font-weight:700;font-size:1rem}
-.toast-msg{font-size:.85rem;color:var(--mu);line-height:1.4}
-.toast-actions{display:flex;gap:8px;justify-content:flex-end}
-@media(min-width:640px){body{padding:16px}h1{font-size:1.4rem}.box b{font-size:1.1rem}form{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}form label:nth-child(1),form label:nth-child(2),form .go{grid-column:auto}.row{grid-template-columns:1fr 110px auto auto;grid-template-areas:"n v s a"}.acts button{flex:none;min-height:36px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Pernambuco Fight Team - Gestão de Mensalidades</title>
+  <meta name="theme-color" content="#090a0f">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#16a34a',
+              hover: '#15803d',
+              light: '#22c55e',
+              glow: 'rgba(34, 197, 94, 0.18)',
+              dark: '#052e16'
+            },
+            surface: {
+              900: '#090a0f',
+              800: '#11141c',
+              700: '#181d29',
+              600: '#23293a',
+              border: '#2a3247'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090a0f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #23293a;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #16a34a;
+    }
+    /* Modern glass & gradients */
+    .glass-card {
+      background: rgba(17, 20, 28, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(42, 50, 71, 0.8);
+    }
+    .neon-border-glow:focus-within {
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35);
+    }
+  </style>
 </head>
-<body>
-<div class="bg-watermark"></div>
-<div class="wrap">
-  <header>
-    <div><h1>Pernambuco Fight Team</h1><div class="subhead">Muay Thai • Jiu-Jitsu</div></div>
-    <span class="tag" id="activeCounterTag">0 ALUNOS</span>
-  </header>
+<body class="bg-[#090a0f] text-slate-100 min-h-screen flex flex-col items-center p-3 sm:p-6 antialiased selection:bg-brand selection:text-white">
 
-  <div class="month-bar">
-    <div class="month-nav">
-      <button type="button" onclick="changeMonth(-1)" title="Mês anterior">&lt;</button>
-      <button type="button" onclick="changeMonth(1)" title="Mês seguinte">&gt;</button>
-    </div>
-    <label style="flex-direction:row;align-items:center;gap:8px;">
-      <span style="font-size:.8rem;font-weight:600;color:var(--tx);">Mês:</span>
-      <input type="month" id="monthPicker" onchange="onMonthChange(this.value)">
-    </label>
+  <!-- Ambient Light Effect -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-emerald-600/10 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-10 right-10 w-[300px] h-[300px] bg-green-500/5 rounded-full blur-[100px]"></div>
   </div>
 
-  <nav class="tabs">
-    <button class="tab on" data-filter="all" onclick="setFilter('all')">Todos</button>
-    <button class="tab" data-filter="pending" onclick="setFilter('pending')">Pendentes</button>
-    <button class="tab" data-filter="paid" onclick="setFilter('paid')">Pagos</button>
-    <button class="btn" onclick="exportData()">⬇ CSV</button>
-    <button class="btn" onclick="backupDatabase()">💾 Backup</button>
-    <button class="btn" onclick="document.getElementById('restoreFileInput').click()">📂 Restaurar</button>
-    <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreDatabase(event)">
-    <button class="btn" onclick="openClearModal()">🗑 Limpar</button>
-  </nav>
+  <main class="w-full max-w-4xl flex flex-col gap-5 z-10 my-auto pb-12">
+    
+    <!-- Top Header -->
+    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl glass-card">
+      <div class="flex items-center gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white">Pernambuco Fight Team</h1>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-brand-light border border-emerald-500/30 uppercase tracking-wide">PRO</span>
+          </div>
+          <p class="text-xs text-slate-400 font-medium tracking-wide">Muay Thai • Jiu-Jitsu • Gestão de Alunos</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 self-start sm:self-center">
+        <span id="activeCounterBadge" class="px-3 py-1.5 rounded-lg bg-surface-700/80 border border-surface-border text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-brand-light animate-pulse"></span>
+          <span id="activeCounterText">0 Alunos</span>
+        </span>
+      </div>
+    </header>
 
-  <section class="sum">
-    <div class="box"><small>Total Alunos</small><b id="totalCount">0</b></div>
-    <div class="box"><small>Recebido</small><b class="ok" id="totalPaid">R$ 0,00</b></div>
-    <div class="box"><small>Pendente</small><b class="pd" id="totalPending">R$ 0,00</b></div>
-  </section>
+    <!-- Month Navigation and Quick Actions -->
+    <section class="glass-card rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-center gap-2 justify-between md:justify-start">
+        <div class="flex items-center bg-surface-700/80 border border-surface-border rounded-xl p-1 shadow-inner">
+          <button type="button" onclick="changeMonth(-1)" class="w-9 h-9 rounded-lg hover:bg-surface-600 active:scale-95 transition flex items-center justify-center text-slate-300 font-bold" title="Mês Anterior">
+            ❮
+          </button>
+          <div class="px-2">
+            <input type="month" id="monthPicker" onchange="onMonthChange(this.value)" class="bg-transparent text-sm font-semibold text-white focus:outline-none cursor-pointer">
+          </div>
+          <button type="button" onclick="changeMonth(1)" class="w-9 h-9 rounded-lg hover:bg-surface-600 active:scale-95 transition flex items-center justify-center text-slate-300 font-bold" title="Mês Seguinte">
+            ❯
+          </button>
+        </div>
+        <button onclick="setCurrentMonth()" class="text-xs text-slate-400 hover:text-brand-light px-2.5 py-1.5 rounded-lg bg-surface-700/40 hover:bg-surface-700 transition">
+          Hoje
+        </button>
+      </div>
 
-  <form id="studentForm" onsubmit="handleAddStudent(event)">
-    <label>Nome do Aluno<input type="text" id="inputName" placeholder="Ex: Rodrigo Santana" required maxlength="80" autocomplete="off"></label>
-    <label>WhatsApp (com DDD)<input type="tel" id="inputPhone" placeholder="Ex: 81988887777" autocomplete="off"></label>
-    <label>Vencimento<input type="date" id="inputDueDate" required></label>
-    <label>Valor (R$)<input type="number" id="inputValue" step="0.01" min="0" max="9999999" placeholder="150.00" required></label>
-    <button type="submit" class="go">+ Registrar</button>
-  </form>
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+        <button onclick="exportData()" class="px-3 py-2 text-xs font-semibold rounded-xl bg-surface-700 hover:bg-surface-600 text-slate-200 border border-surface-border transition flex items-center gap-1.5 whitespace-nowrap active:scale-95">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          CSV
+        </button>
+        <button onclick="backupDatabase()" class="px-3 py-2 text-xs font-semibold rounded-xl bg-surface-700 hover:bg-surface-600 text-slate-200 border border-surface-border transition flex items-center gap-1.5 whitespace-nowrap active:scale-95">
+          <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+          Backup
+        </button>
+        <button onclick="document.getElementById('restoreFileInput').click()" class="px-3 py-2 text-xs font-semibold rounded-xl bg-surface-700 hover:bg-surface-600 text-slate-200 border border-surface-border transition flex items-center gap-1.5 whitespace-nowrap active:scale-95">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          Restaurar
+        </button>
+        <input type="file" id="restoreFileInput" accept=".json" class="hidden" onchange="restoreDatabase(event)">
+        <button onclick="openClearModal()" class="px-3 py-2 text-xs font-semibold rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition flex items-center gap-1.5 whitespace-nowrap active:scale-95">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          Limpar Mês
+        </button>
+      </div>
+    </section>
 
-  <section class="list" id="studentList"></section>
+    <!-- Financial KPI Cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+      <div class="glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col justify-between">
+        <div class="flex items-center justify-between text-slate-400">
+          <span class="text-xs uppercase font-bold tracking-wider">Matrículas Ativas</span>
+          <span class="p-1.5 rounded-lg bg-surface-700 text-slate-300">👥</span>
+        </div>
+        <div class="mt-3">
+          <div id="totalCount" class="text-2xl font-black text-white">0</div>
+          <p class="text-[11px] text-slate-400 mt-0.5">Alunos registrados no mês</p>
+        </div>
+      </div>
 
-  <section class="box" style="padding:14px;display:flex;flex-direction:column;gap:12px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-      <b style="font-size:.95rem;margin:0;">📊 Comparativo de Faturamento Anual</b>
-      <div style="display:flex;align-items:center;gap:6px;">
-        <label for="chartYearSelect" style="font-size:.75rem;">Ano:</label>
-        <select id="chartYearSelect" style="min-height:34px;padding:0 8px;font-size:.85rem;width:auto;" onchange="onChartYearChange(this.value)"></select>
+      <div class="glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col justify-between border-brand/40 bg-gradient-to-br from-surface-800 to-emerald-950/20">
+        <div class="flex items-center justify-between text-emerald-400">
+          <span class="text-xs uppercase font-bold tracking-wider">Recebido</span>
+          <span class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">💰</span>
+        </div>
+        <div class="mt-3">
+          <div id="totalPaid" class="text-2xl font-black text-emerald-400">R$ 0,00</div>
+          <p class="text-[11px] text-slate-400 mt-0.5" id="paidPercentageText">0% arrecadado</p>
+        </div>
+      </div>
+
+      <div class="glass-card p-4 rounded-2xl relative overflow-hidden flex flex-col justify-between border-rose-500/20 bg-gradient-to-br from-surface-800 to-rose-950/10">
+        <div class="flex items-center justify-between text-rose-400">
+          <span class="text-xs uppercase font-bold tracking-wider">Pendente</span>
+          <span class="p-1.5 rounded-lg bg-rose-500/10 text-rose-400">⏳</span>
+        </div>
+        <div class="mt-3">
+          <div id="totalPending" class="text-2xl font-black text-rose-400">R$ 0,00</div>
+          <p class="text-[11px] text-slate-400 mt-0.5" id="pendingCountText">0 pagamentos em aberto</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Student Registration Form -->
+    <section class="glass-card rounded-2xl p-4 sm:p-5">
+      <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-3 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-light"></span> Registrar Novo Aluno / Mensalidade
+      </h2>
+      <form id="studentForm" onsubmit="handleAddStudent(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+        <div class="flex flex-col gap-1 sm:col-span-2 lg:col-span-2">
+          <label class="text-[11px] font-semibold text-slate-400">Nome do Aluno</label>
+          <input type="text" id="inputName" placeholder="Ex: Lucas Silva" required maxlength="80" autocomplete="off"
+            class="w-full bg-surface-900 border border-surface-border rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-light transition">
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-semibold text-slate-400">Plano / Frequência</label>
+          <select id="inputFrequency" required
+            class="w-full bg-surface-900 border border-surface-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-brand-light transition">
+            <option value="5x">5x na semana</option>
+            <option value="3x">3x na semana</option>
+            <option value="diaria">Diária</option>
+            <option value="personal">Personal Fight</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-semibold text-slate-400">Unidade</label>
+          <select id="inputUnit" required
+            class="w-full bg-surface-900 border border-surface-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-brand-light transition">
+            <option value="Cambarai">Cambaraí</option>
+            <option value="Juquita">Juquita</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-semibold text-slate-400">WhatsApp (com DDD)</label>
+          <input type="tel" id="inputPhone" placeholder="Ex: 81987654321" autocomplete="off"
+            class="w-full bg-surface-900 border border-surface-border rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-light transition">
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-semibold text-slate-400">Vencimento & Valor (R$)</label>
+          <div class="flex gap-2">
+            <input type="date" id="inputDueDate" required
+              class="w-1/2 bg-surface-900 border border-surface-border rounded-xl px-2 py-2.5 text-xs text-white focus:outline-none focus:border-brand-light transition">
+            <input type="number" id="inputValue" step="0.01" min="0" max="9999999" placeholder="150.00" required
+              class="w-1/2 bg-surface-900 border border-surface-border rounded-xl px-2 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-light transition">
+            <button type="submit" class="bg-brand hover:bg-brand-hover active:scale-95 transition text-white font-bold px-3 rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-emerald-950/40">
+              +
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Students Listing Header & Filters -->
+    <section class="flex flex-col gap-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-bold text-white tracking-wide">Lista de Alunos</span>
+          <span id="filteredCountBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-surface-700 text-slate-300">0 exibido(s)</span>
+        </div>
+
+        <!-- Filter Tabs & Unit Filter -->
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="unitFilter" onchange="onUnitFilterChange(this.value)" class="text-xs bg-surface-800 border border-surface-border text-slate-300 rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-brand-light">
+            <option value="all">Todas Unidades</option>
+            <option value="Cambarai">Cambaraí</option>
+            <option value="Juquita">Juquita</option>
+          </select>
+
+          <div class="flex items-center gap-1 p-1 bg-surface-800/90 border border-surface-border rounded-xl self-start sm:self-auto">
+            <button type="button" onclick="setFilter('all')" data-filter="all" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-brand shadow transition">
+              Todos
+            </button>
+            <button type="button" onclick="setFilter('pending')" data-filter="pending" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">
+              Pendentes
+            </button>
+            <button type="button" onclick="setFilter('paid')" data-filter="paid" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">
+              Pagos
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Students Card List -->
+      <div id="studentList" class="flex flex-col gap-2.5">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Revenue Analytics & Comparison -->
+    <section class="glass-card rounded-2xl p-5 flex flex-col gap-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            📊 Comparativo de Faturamento Anual
+          </h3>
+          <p class="text-xs text-slate-400">Desempenho financeiro mês a mês</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="chartYearSelect" class="text-xs font-medium text-slate-400">Ano:</label>
+          <select id="chartYearSelect" onchange="onChartYearChange(this.value)"
+            class="bg-surface-700/80 border border-surface-border text-white text-xs font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:border-brand-light">
+          </select>
+        </div>
+      </div>
+
+      <!-- Best Month Highlight Badge -->
+      <div id="bestMonthBadge" style="display:none;" class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2">
+        <span class="text-lg">🏆</span>
+        <div>
+          <strong>Mês Recorde:</strong> <span id="bestMonthText">--</span>
+        </div>
+      </div>
+
+      <!-- Chart Canvas Container -->
+      <div class="relative w-full h-[240px] sm:h-[280px]">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Action Confirmation Modal -->
+  <div id="customModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-surface-800 border border-surface-border rounded-2xl max-w-sm w-full p-5 shadow-2xl flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+      <div class="flex items-center gap-3">
+        <div id="modalIconWrap" class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg">
+          ⚠️
+        </div>
+        <div>
+          <h4 id="modalTitle" class="text-sm font-bold text-white">Confirmação</h4>
+          <p id="modalMsg" class="text-xs text-slate-400 mt-0.5 leading-relaxed">Você deseja prosseguir?</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 bg-surface-700 hover:bg-surface-600 transition">
+          Cancelar
+        </button>
+        <button id="modalConfirmBtn" class="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-brand hover:bg-brand-hover transition shadow-lg shadow-emerald-950/50">
+          Confirmar
+        </button>
       </div>
     </div>
-    <div id="bestMonthBadge" style="display:none;background:var(--okbg);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:8px 12px;font-size:.8rem;color:var(--ok);">
-      🏆 <strong>Maior faturamento:</strong> <span id="bestMonthText">--</span>
-    </div>
-    <div style="position:relative;width:100%;height:220px;"><canvas id="revenueChart"></canvas></div>
-  </section>
-</div>
-
-<div id="pwOverlay" class="toast-overlay" style="z-index:900;background:#000;">
-  <div class="toast-box">
-    <div class="toast-title" id="pwTitle"></div>
-    <div class="toast-msg" id="pwMsg"></div>
-    <input type="password" id="pwInput" placeholder="Senha" maxlength="64" autocomplete="current-password">
-    <div class="toast-msg" id="pwErr" style="color:#ef4444;min-height:1em"></div>
-    <div class="toast-actions">
-      <button class="btn" id="pwReset" style="display:none">Esqueci a senha</button>
-      <button class="btn" id="pwCancel" style="display:none">Cancelar</button>
-      <button class="btn" id="pwOk" style="background:var(--ok);color:#fff;border-color:var(--ok);">Entrar</button>
-    </div>
   </div>
-</div>
 
-<div id="customModal" class="toast-overlay">
-  <div class="toast-box">
-    <div class="toast-title" id="modalTitle">Confirmação</div>
-    <div class="toast-msg" id="modalMsg"></div>
-    <div class="toast-actions">
-      <button class="btn" onclick="closeModal()">Cancelar</button>
-      <button class="btn" id="modalConfirmBtn" style="background:var(--ok);color:#fff;border-color:var(--ok);">Confirmar</button>
-    </div>
-  </div>
-</div>
+  <script>
+    // State & Constants
+    const STORAGE_KEY = 'mensalidades_alunos_app_v2';
+    let currentFilter = 'all';
+    let currentUnitFilter = 'all';
+    let currentMonth = '';
+    let chartYear = '';
+    let chartInstance = null;
+    let students = [];
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>
-const STORAGE_KEY='mensalidades_alunos_app_v2';
-let currentFilter='all',currentMonth='',chartYear='',chartInstance=null,students=[];
-let downloadsApi=null;
-
-window.addEventListener('DOMContentLoaded',()=>{
-  const now=new Date(),yr=String(now.getFullYear()),mo=String(now.getMonth()+1).padStart(2,'0');
-  currentMonth=`${yr}-${mo}`;chartYear=yr;
-  document.getElementById('monthPicker').value=currentMonth;
-  document.getElementById('inputDueDate').value=`${currentMonth}-${String(now.getDate()).padStart(2,'0')}`;
-  loadData();
-  try{if(window.claude&&claude.use){claude.use('downloads').then(d=>{downloadsApi=d}).catch(()=>{})}}catch(e){}
-});
-
-async function saveFile(filename,content,mime){
-  const blob=new Blob([content],{type:mime});
-  if(downloadsApi){
-    try{await downloadsApi.save({filename,data:blob});return}catch(e){if(e&&e.code==='declined')return}
-  }
-  try{
-    const url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);
-  }catch(e){}
-}
-
-async function backupDatabase(){
-  saveFile(`backup_pft_${new Date().toISOString().slice(0,10)}.json`,JSON.stringify({students,exportedAt:new Date().toISOString()},null,2),'application/json');
-}
-
-function restoreDatabase(event){
-  const file=event.target.files&&event.target.files[0];
-  if(!file)return;
-  const reader=new FileReader();
-  if(file.size>5e6){event.target.value='';showModal({title:'Arquivo muito grande',message:'O backup deve ter menos de 5 MB.',onConfirm:()=>{}});return}
-  reader.onload=async e=>{
-    try{
-      const parsed=JSON.parse(e.target.result);
-      let list;
-      if(parsed&&parsed.v===3){
-        const p=await pwDialog({title:'Backup protegido',msg:'Digite a senha usada neste backup.',cancelable:true,okLabel:'Restaurar',validate:async pw=>{try{list=sanitizeStudents(JSON.parse(await decryptWith(await deriveKey(pw,unb64(parsed.salt)),parsed)));return null}catch(x){return 'Senha incorreta.'}}});
-        if(p===null){event.target.value='';return}
-      }else if(parsed&&Array.isArray(parsed.students)){list=sanitizeStudents(parsed.students)}
-      else throw new Error('x');
-      students=list;saveData();populateYearSelector();render();
-      showModal({title:'Cópia restaurada',message:'Seus dados foram importados com sucesso!',onConfirm:()=>{}});
-    }catch(err){
-      showModal({title:'Erro ao restaurar',message:'O arquivo selecionado não é válido.',onConfirm:()=>{}});
-    }
-    event.target.value='';
-  };
-  reader.readAsText(file);
-}
-
-function populateYearSelector(){
-  const sel=document.getElementById('chartYearSelect');
-  const years=new Set([String(new Date().getFullYear()),chartYear]);
-  students.forEach(s=>{if(s.dueDate&&s.dueDate.length>=4)years.add(s.dueDate.substring(0,4))});
-  sel.innerHTML='';
-  Array.from(years).sort((a,b)=>b.localeCompare(a)).forEach(y=>{
-    const o=document.createElement('option');o.value=y;o.textContent=y;if(y===chartYear)o.selected=true;sel.appendChild(o);
-  });
-}
-function onChartYearChange(v){chartYear=v;renderChart()}
-
-function renderChart(){
-  const canvas=document.getElementById('revenueChart');
-  if(!canvas||typeof Chart==='undefined')return;
-  const names=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  const paid=new Array(12).fill(0),pend=new Array(12).fill(0);
-  students.forEach(s=>{
-    if(!s.dueDate||!s.dueDate.startsWith(chartYear))return;
-    const i=parseInt(s.dueDate.split('-')[1],10)-1,v=parseFloat(s.value)||0;
-    if(i>=0&&i<12){s.paid?paid[i]+=v:pend[i]+=v}
-  });
-  let max=0,mi=-1;
-  paid.forEach((a,i)=>{if(a>max){max=a;mi=i}});
-  const badge=document.getElementById('bestMonthBadge');
-  if(max>0){badge.style.display='block';document.getElementById('bestMonthText').textContent=`${names[mi]}/${chartYear} com ${formatCurrency(max)} faturados`}
-  else badge.style.display='none';
-  const colors=paid.map((a,i)=>(a>0&&i===mi)?'#22c55e':'rgba(34,197,94,.45)');
-  if(chartInstance)chartInstance.destroy();
-  chartInstance=new Chart(canvas.getContext('2d'),{
-    type:'bar',
-    data:{labels:names,datasets:[
-      {label:'Recebido (R$)',data:paid,backgroundColor:colors,borderColor:'#22c55e',borderWidth:1,borderRadius:6},
-      {label:'Pendente (R$)',data:pend,backgroundColor:'rgba(239,68,68,.35)',borderColor:'#ef4444',borderWidth:1,borderRadius:6}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#9ca3af',font:{size:11},boxWidth:12}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${formatCurrency(c.raw)}`}}},
-      scales:{x:{grid:{color:'#262626'},ticks:{color:'#9ca3af',font:{size:11}}},y:{grid:{color:'#262626'},ticks:{color:'#9ca3af',font:{size:10},callback:v=>'R$ '+v}}}}
-  });
-}
-
-function changeMonth(off){
-  let [y,m]=currentMonth.split('-').map(n=>parseInt(n,10));
-  m+=off;if(m>12){m=1;y++}else if(m<1){m=12;y--}
-  currentMonth=`${y}-${String(m).padStart(2,'0')}`;
-  document.getElementById('monthPicker').value=currentMonth;
-  if(String(y)!==chartYear){chartYear=String(y);populateYearSelector()}
-  const di=document.getElementById('inputDueDate');
-  if(di&&di.value){di.value=`${currentMonth}-${di.value.split('-')[2]||'10'}`}
-  render();
-}
-function onMonthChange(v){
-  if(!v)return;
-  currentMonth=v;const yr=v.split('-')[0];
-  if(yr!==chartYear){chartYear=yr;populateYearSelector()}
-  render();
-}
-function getMonthStudents(){return students.filter(s=>s.dueDate&&s.dueDate.startsWith(currentMonth))}
-
-const STORAGE_KEY_NOTE='dados ficam apenas neste aparelho';
-const VAULT_KEY='pft_vault_v3';
-const $=id=>document.getElementById(id);
-let vault=null,failCount=0,lockUntil=0;
-const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-async function deriveKey(pw,salt){
-  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
-  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:600000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
-}
-async function decryptWith(key,o){
-  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(o.iv)},key,unb64(o.ct));
-  return new TextDecoder().decode(pt);
-}
-function sanitizeStudents(arr){
-  if(!Array.isArray(arr))throw new Error('formato');
-  const out=[];
-  arr.slice(0,5000).forEach(s=>{
-    if(!s||typeof s!=='object')return;
-    const dueDate=String(s.dueDate||'');
-    if(!/^\d{4}-\d{2}-\d{2}$/.test(dueDate))return;
-    const v=Number(s.value);
-    out.push({id:String(s.id||(Date.now()+'-'+Math.random())).slice(0,40),name:String(s.name||'').trim().slice(0,80)||'Sem nome',phone:String(s.phone||'').replace(/\D/g,'').slice(0,13),dueDate,value:(isFinite(v)&&v>=0&&v<1e7)?v:0,paid:s.paid===true});
-  });
-  return out;
-}
-function pwDialog({title,msg,okLabel='Entrar',showReset=false,cancelable=false,validate}){
-  return new Promise(res=>{
-    const ov=$('pwOverlay'),i1=$('pwInput'),err=$('pwErr'),ok=$('pwOk'),cn=$('pwCancel'),rs=$('pwReset');
-    $('pwTitle').textContent=title;$('pwMsg').textContent=msg;err.textContent='';
-    i1.value='';cn.style.display=cancelable?'':'none';rs.style.display=showReset?'':'none';ok.textContent=okLabel;
-    ov.style.display='flex';setTimeout(()=>i1.focus(),50);
-    const done=v=>{ov.style.display='none';ok.onclick=cn.onclick=rs.onclick=null;i1.onkeydown=null;i1.value='';res(v)};
-    const submit=async()=>{
-      const p=i1.value;
-      if(p.length<6){err.textContent='Use pelo menos 6 caracteres.';return}
-      ok.disabled=true;
-      const e=validate?await validate(p):null;
-      ok.disabled=false;
-      if(e){err.textContent=e;i1.value='';i1.focus();return}
-      done(p);
+    const FREQUENCY_LABELS = {
+      '5x': '5x na semana',
+      '3x': '3x na semana',
+      'diaria': 'Diária',
+      'personal': 'Personal Fight'
     };
-    ok.onclick=submit;cn.onclick=()=>done(null);rs.onclick=resetVault;
-    i1.onkeydown=e=>{if(e.key==='Enter')submit()};
-  });
-}
-async function tryUnlock(pw){
-  const wait=lockUntil-Date.now();
-  if(wait>0)return `Muitas tentativas. Aguarde ${Math.ceil(wait/1000)}s.`;
-  try{
-    const k=await deriveKey(pw,unb64(vault.salt));
-    students=sanitizeStudents(JSON.parse(await decryptWith(k,vault)));
-    failCount=0;return null;
-  }catch(e){
-    failCount++;
-    if(failCount>=5)lockUntil=Date.now()+Math.min(300000,30000*(failCount-4));
-    return 'Senha incorreta.';
-  }
-}
-function resetVault(){
-  showModal({title:'Apagar dados antigos protegidos?',message:'Sem a senha antiga não é possível recuperar esses dados. Se tiver um backup, você poderá restaurá-lo depois.',onConfirm:()=>{
-    try{localStorage.removeItem(VAULT_KEY)}catch(e){}
-    vault=null;students=[];$('pwOverlay').style.display='none';populateYearSelector();render();
-  }});
-}
-async function loadData(){
-  try{const s=localStorage.getItem(STORAGE_KEY);if(s)students=sanitizeStudents(JSON.parse(s))}catch(e){students=[]}
-  let v=null;
-  try{const raw=localStorage.getItem(VAULT_KEY);if(raw){const o=JSON.parse(raw);if(o&&o.v===3&&o.salt&&o.iv&&o.ct)v=o}}catch(e){}
-  if(v&&!students.length){
-    vault=v;
-    await pwDialog({title:'Liberar dados antigos',msg:'Encontramos dados salvos com senha. Digite a senha uma última vez para passar a usar o app sem senha.',showReset:true,validate:tryUnlock});
-    saveData();
-    try{localStorage.removeItem(VAULT_KEY)}catch(e){}
-  }
-  populateYearSelector();render();
-}
-function saveData(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(students))}catch(e){console.error(e)}}
-function formatCurrency(v){return(Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
-function formatDate(d){if(!d)return'--/--/----';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d}
 
-function handleAddStudent(e){
-  e.preventDefault();
-  const n=document.getElementById('inputName'),p=document.getElementById('inputPhone'),d=document.getElementById('inputDueDate'),v=document.getElementById('inputValue');
-  const name=n.value.trim(),phone=p.value.replace(/\D/g,''),dueDate=d.value,value=parseFloat(v.value);
-  if(!name||isNaN(value)||value<0||value>=1e7||!dueDate)return;
-  if(phone&&(phone.length<10||phone.length>11)){showModal({title:'WhatsApp inválido',message:'Informe DDD + número (10 ou 11 dígitos).',onConfirm:()=>{}});return}
-  students.unshift({id:Date.now().toString(),name,phone,dueDate,value,paid:false});
-  saveData();
-  const mes=dueDate.slice(0,7);
-  if(mes!==currentMonth){currentMonth=mes;document.getElementById('monthPicker').value=mes;chartYear=mes.slice(0,4)}
-  populateYearSelector();render();
-  n.value='';p.value='';v.value='';n.focus();
-}
-function toggleStatus(id){const s=students.find(x=>x.id===id);if(s){s.paid=!s.paid;saveData();render()}}
-function handleNameUpdate(id,nn){const s=students.find(x=>x.id===id);if(s&&nn.trim()){s.name=nn.trim().slice(0,80);saveData();updateSummary()}}
-function handleValueUpdate(id,str){
-  const s=students.find(x=>x.id===id);
-  if(s){const num=parseFloat(str.replace(/[^0-9.,]/g,'').replace(',','.'));if(!isNaN(num)&&num>=0&&num<1e7){s.value=num;saveData()}render()}
-}
+    const UNIT_LABELS = {
+      'Cambarai': 'Cambaraí',
+      'Juquita': 'Juquita'
+    };
 
-function showModal({title,message,onConfirm}){
-  document.getElementById('modalTitle').textContent=title;
-  document.getElementById('modalMsg').textContent=message;
-  document.getElementById('modalConfirmBtn').onclick=()=>{onConfirm();closeModal()};
-  document.getElementById('customModal').style.display='flex';
-}
-function closeModal(){document.getElementById('customModal').style.display='none'}
+    // Initialize application
+    window.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      const yr = String(now.getFullYear());
+      const mo = String(now.getMonth() + 1).padStart(2, '0');
+      currentMonth = `${yr}-${mo}`;
+      chartYear = yr;
 
-function deleteStudent(id){
-  const s=students.find(x=>x.id===id);
-  showModal({title:'Excluir aluno',message:`Tem certeza que deseja remover ${s?s.name:'este aluno'}?`,onConfirm:()=>{students=students.filter(x=>x.id!==id);saveData();populateYearSelector();render()}});
-}
-function openClearModal(){
-  const p=currentMonth.split('-');
-  showModal({title:'Limpar registros do mês',message:`Deseja excluir todos os alunos registrados no mês ${p[1]}/${p[0]}?`,onConfirm:()=>{students=students.filter(s=>!s.dueDate.startsWith(currentMonth));saveData();populateYearSelector();render()}});
-}
+      document.getElementById('monthPicker').value = currentMonth;
+      document.getElementById('inputDueDate').value = `${currentMonth}-${String(now.getDate()).padStart(2, '0')}`;
 
-function openWhatsApp(id){
-  const s=students.find(x=>x.id===id);
-  if(!s)return;
-  if(!s.phone){showModal({title:'Telefone não registrado',message:`O aluno ${s.name} não possui WhatsApp informado.`,onConfirm:()=>{}});return}
-  const val=formatCurrency(s.value),dt=formatDate(s.dueDate);
-  const text=s.paid
-    ?`Olá, ${s.name}! Confirmamos o recebimento da sua mensalidade no valor de ${val}. Muito obrigado!`
-    :`Olá, ${s.name}! Lembramos sobre a sua mensalidade de ${val} com vencimento em ${dt}. Caso já tenha efetuado o pagamento, por favor desconsidere.`;
-  window.open(`https://wa.me/55${s.phone.replace(/\D/g,'')}?text=${encodeURIComponent(text)}`,'_blank','noopener,noreferrer');
-}
+      loadData();
+    });
 
-function setFilter(f){
-  currentFilter=f;
-  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.toggle('on',t.dataset.filter===f));
-  renderList();
-}
+    // Formatting Helpers
+    function formatCurrency(v) {
+      return (Number(v) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
 
-function updateSummary(){
-  const data=getMonthStudents();let paid=0,pend=0;
-  data.forEach(s=>{const v=Number(s.value)||0;s.paid?paid+=v:pend+=v});
-  document.getElementById('totalCount').textContent=data.length;
-  document.getElementById('totalPaid').textContent=formatCurrency(paid);
-  document.getElementById('totalPending').textContent=formatCurrency(pend);
-  document.getElementById('activeCounterTag').textContent=`${data.length} ${data.length===1?'ALUNO':'ALUNOS'}`;
-}
+    function formatDate(d) {
+      if (!d) return '--/--/----';
+      const parts = d.split('-');
+      return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : d;
+    }
 
-function renderList(){
-  const el=document.getElementById('studentList');el.innerHTML='';
-  let f=getMonthStudents();
-  if(currentFilter==='pending')f=f.filter(s=>!s.paid);else if(currentFilter==='paid')f=f.filter(s=>s.paid);
-  if(!f.length){
-    const e=document.createElement('div');e.className='empty';
-    const p=currentMonth.split('-');e.textContent=`Nenhum aluno registrado para o mês ${p[1]}/${p[0]}.`;
-    el.appendChild(e);return;
-  }
-  f.forEach(s=>{
-    const row=document.createElement('div');row.className='row';
-    const nd=document.createElement('div');
-    const ni=document.createElement('input');ni.className='nmi';ni.type='text';ni.value=s.name;
-    ni.addEventListener('change',e=>handleNameUpdate(s.id,e.target.value));
-    const meta=document.createElement('div');meta.className='meta';
-    meta.textContent=`Venc: ${formatDate(s.dueDate)}${s.phone?` • WhatsApp: ${s.phone}`:''}`;
-    nd.append(ni,meta);
-    const vi=document.createElement('input');vi.className='vli';vi.type='text';vi.value=formatCurrency(s.value);
-    vi.addEventListener('focus',e=>{e.target.value=s.value});
-    vi.addEventListener('blur',e=>handleValueUpdate(s.id,e.target.value));
-    const st=document.createElement('button');st.className=s.paid?'st p':'st';st.textContent=s.paid?'Pago':'Pendente';
-    st.onclick=()=>toggleStatus(s.id);
-    const acts=document.createElement('div');acts.className='acts';
-    const zap=document.createElement('button');zap.textContent='Cobrança';zap.onclick=()=>openWhatsApp(s.id);
-    const del=document.createElement('button');del.className='del';del.textContent='Excluir';del.onclick=()=>deleteStudent(s.id);
-    acts.append(zap,del);
-    row.append(nd,vi,st,acts);el.appendChild(row);
-  });
-}
+    function setCurrentMonth() {
+      const now = new Date();
+      const yr = String(now.getFullYear());
+      const mo = String(now.getMonth() + 1).padStart(2, '0');
+      currentMonth = `${yr}-${mo}`;
+      document.getElementById('monthPicker').value = currentMonth;
+      if (yr !== chartYear) {
+        chartYear = yr;
+        populateYearSelector();
+      }
+      render();
+    }
 
-function render(){updateSummary();renderList();renderChart()}
+    function changeMonth(offset) {
+      let [y, m] = currentMonth.split('-').map(n => parseInt(n, 10));
+      m += offset;
+      if (m > 12) { m = 1; y++; }
+      else if (m < 1) { m = 12; y--; }
+      
+      currentMonth = `${y}-${String(m).padStart(2, '0')}`;
+      document.getElementById('monthPicker').value = currentMonth;
+      
+      if (String(y) !== chartYear) {
+        chartYear = String(y);
+        populateYearSelector();
+      }
 
-function exportData(){
-  const data=getMonthStudents();
-  if(!data.length){showModal({title:'Sem dados',message:'Não há registros neste mês para exportar.',onConfirm:()=>{}});return}
-  let csv='ID,Nome,WhatsApp,Vencimento,Valor,Status\n';
-  const cell=v=>{let t=String(v);if(/^[=+\-@\t\r]/.test(t))t="'"+t;return '"'+t.replace(/"/g,'""')+'"'};
-  data.forEach(s=>{csv+=[s.id,s.name,s.phone||'',s.dueDate,s.value,s.paid?'Pago':'Pendente'].map(cell).join(',')+'\n'});
-  saveFile(`mensalidades_${currentMonth}.csv`,csv,'text/csv;charset=utf-8;');
-}
-</script>
+      const inputDue = document.getElementById('inputDueDate');
+      if (inputDue && inputDue.value) {
+        const day = inputDue.value.split('-')[2] || '10';
+        inputDue.value = `${currentMonth}-${day}`;
+      }
+      render();
+    }
+
+    function onMonthChange(val) {
+      if (!val) return;
+      currentMonth = val;
+      const yr = val.split('-')[0];
+      if (yr !== chartYear) {
+        chartYear = yr;
+        populateYearSelector();
+      }
+      render();
+    }
+
+    // Data Management
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          students = sanitizeStudents(JSON.parse(raw));
+        } else {
+          // Inicializa sem alunos pré-cadastrados
+          students = [];
+          saveData();
+        }
+      } catch (e) {
+        students = [];
+      }
+      // Limpeza imediata caso ainda existam os exemplos antigos na primeira carga
+      const demoNames = ['Marcos Vinícius', 'Carla Silveira', 'Rodrigo Lima'];
+      const hasOnlyDemos = students.length > 0 && students.every(s => demoNames.includes(s.name));
+      if (hasOnlyDemos) {
+        students = [];
+        saveData();
+      }
+
+      populateYearSelector();
+      render();
+    }
+
+    function sanitizeStudents(arr) {
+      if (!Array.isArray(arr)) return [];
+      return arr.slice(0, 10000).map(s => {
+        const v = Number(s.value);
+        const dailyCount = parseInt(s.dailyCount, 10);
+        return {
+          id: String(s.id || Date.now() + Math.random()),
+          name: String(s.name || '').trim().slice(0, 80) || 'Sem Nome',
+          frequency: ['5x', '3x', 'diaria', 'personal'].includes(s.frequency) ? s.frequency : '5x',
+          unit: ['Cambarai', 'Juquita'].includes(s.unit) ? s.unit : 'Cambarai',
+          dailyCount: Number.isInteger(dailyCount) && dailyCount >= 0 ? dailyCount : 0,
+          phone: String(s.phone || '').replace(/\D/g, '').slice(0, 13),
+          dueDate: String(s.dueDate || ''),
+          value: isFinite(v) && v >= 0 ? v : 0,
+          paid: Boolean(s.paid)
+        };
+      });
+    }
+
+    // Actions
+    function handleAddStudent(e) {
+      e.preventDefault();
+      const n = document.getElementById('inputName');
+      const f = document.getElementById('inputFrequency');
+      const u = document.getElementById('inputUnit');
+      const p = document.getElementById('inputPhone');
+      const d = document.getElementById('inputDueDate');
+      const v = document.getElementById('inputValue');
+
+      const name = n.value.trim();
+      const frequency = f.value;
+      const unit = u.value;
+      const phone = p.value.replace(/\D/g, '');
+      const dueDate = d.value;
+      const value = parseFloat(v.value);
+
+      if (!name || isNaN(value) || value < 0 || !dueDate) return;
+
+      if (phone && (phone.length < 10 || phone.length > 11)) {
+        showModal({
+          title: 'WhatsApp Inválido',
+          message: 'Por favor, informe DDD + número válido (10 ou 11 dígitos).',
+          onConfirm: () => {}
+        });
+        return;
+      }
+
+      const hasAttendanceCounter = frequency === 'diaria' || frequency === 'personal';
+
+      students.unshift({
+        id: Date.now().toString(),
+        name,
+        frequency,
+        unit,
+        dailyCount: hasAttendanceCounter ? 1 : 0,
+        phone,
+        dueDate,
+        value,
+        paid: false
+      });
+
+      saveData();
+
+      const studentMonth = dueDate.slice(0, 7);
+      if (studentMonth !== currentMonth) {
+        currentMonth = studentMonth;
+        document.getElementById('monthPicker').value = studentMonth;
+        chartYear = studentMonth.slice(0, 4);
+      }
+
+      populateYearSelector();
+      render();
+
+      n.value = '';
+      p.value = '';
+      v.value = '';
+      n.focus();
+    }
+
+    function handleFrequencyUpdate(id, newFreq) {
+      const s = students.find(x => x.id === id);
+      if (s) {
+        s.frequency = newFreq;
+        const hasAttendanceCounter = newFreq === 'diaria' || newFreq === 'personal';
+        if (hasAttendanceCounter && (s.dailyCount === undefined || s.dailyCount === null || s.dailyCount === 0)) {
+          s.dailyCount = 1;
+        }
+        saveData();
+        renderList();
+      }
+    }
+
+    function updateDailyCount(id, delta) {
+      const s = students.find(x => x.id === id);
+      if (s) {
+        const cur = parseInt(s.dailyCount || 0, 10);
+        s.dailyCount = Math.max(0, cur + delta);
+        saveData();
+        renderList();
+      }
+    }
+
+    function setDailyCount(id, value) {
+      const s = students.find(x => x.id === id);
+      if (s) {
+        const parsed = parseInt(value, 10);
+        s.dailyCount = !isNaN(parsed) && parsed >= 0 ? parsed : 0;
+        saveData();
+        renderList();
+      }
+    }
+
+    function handleUnitUpdate(id, newUnit) {
+      const s = students.find(x => x.id === id);
+      if (s) {
+        s.unit = newUnit;
+        saveData();
+      }
+    }
+
+    function onUnitFilterChange(val) {
+      currentUnitFilter = val;
+      renderList();
+    }
+
+    function openWhatsApp(id) {
+      const s = students.find(x => x.id === id);
+      if (!s) return;
+
+      if (!s.phone) {
+        showModal({
+          title: 'Telefone Ausente',
+          message: `O aluno ${s.name} não possui número de WhatsApp cadastrado.`,
+          onConfirm: () => {}
+        });
+        return;
+      }
+
+      const val = formatCurrency(s.value);
+      const dt = formatDate(s.dueDate);
+      const freqLabel = FREQUENCY_LABELS[s.frequency] || s.frequency;
+      const unitLabel = UNIT_LABELS[s.unit] || s.unit;
+      const hasAttendanceCounter = s.frequency === 'diaria' || s.frequency === 'personal';
+      const countLabel = s.frequency === 'personal' ? 'sessão(ões)' : 'aula(s)';
+      const dailyInfo = hasAttendanceCounter ? ` (${s.dailyCount || 0} ${countLabel} registrada(s))` : '';
+      
+      const message = s.paid
+        ? `Olá, ${s.name}! 🥊 Confirmamos o recebimento da sua mensalidade (${freqLabel}${dailyInfo} - Polo ${unitLabel}) no valor de ${val} na Pernambuco Fight Team. Muito obrigado e ótimos treinos!`
+        : `Olá, ${s.name}! 🥊 Passando para lembrar da sua mensalidade (${freqLabel}${dailyInfo} - Polo ${unitLabel}) da Pernambuco Fight Team no valor de ${val}, com vencimento em ${dt}. Se já realizou o pagamento, por gentileza desconsidere.`;
+
+      const cleanPhone = s.phone.replace(/\D/g, '');
+      const url = `https://wa.me/55${cleanPhone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    // Student List Render
+    function renderList() {
+      const container = document.getElementById('studentList');
+      container.innerHTML = '';
+
+      let list = getMonthStudents();
+      if (currentFilter === 'pending') list = list.filter(s => !s.paid);
+      if (currentFilter === 'paid') list = list.filter(s => s.paid);
+      if (currentUnitFilter !== 'all') list = list.filter(s => s.unit === currentUnitFilter);
+
+      document.getElementById('filteredCountBadge').textContent = `${list.length} exibido(s)`;
+
+      if (list.length === 0) {
+        const [y, m] = currentMonth.split('-');
+        container.innerHTML = `
+          <div class="glass-card rounded-2xl p-8 text-center flex flex-col items-center justify-center gap-2 border-dashed">
+            <span class="text-3xl text-slate-600">🥋</span>
+            <p class="text-sm font-semibold text-slate-300">Nenhum aluno encontrado para ${m}/${y}.</p>
+            <p class="text-xs text-slate-500">Adicione uma mensalidade acima ou ajuste os filtros.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach(s => {
+        const row = document.createElement('div');
+        row.className = 'glass-card rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition hover:border-slate-600';
+
+        // Student Info & In-line categories
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'flex-1 min-w-0 flex flex-col gap-1.5';
+
+        // Top line with Categories Dropdowns & Name
+        const topRow = document.createElement('div');
+        topRow.className = 'flex flex-wrap items-center gap-2';
+
+        // Category 1: Frequency Selector
+        const freqSelect = document.createElement('select');
+        freqSelect.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 focus:outline-none cursor-pointer';
+        freqSelect.innerHTML = `
+          <option value="5x" class="bg-surface-800 text-white" ${s.frequency === '5x' ? 'selected' : ''}>5x na semana</option>
+          <option value="3x" class="bg-surface-800 text-white" ${s.frequency === '3x' ? 'selected' : ''}>3x na semana</option>
+          <option value="diaria" class="bg-surface-800 text-white" ${s.frequency === 'diaria' ? 'selected' : ''}>Diária</option>
+          <option value="personal" class="bg-surface-800 text-white" ${s.frequency === 'personal' ? 'selected' : ''}>Personal Fight</option>
+        `;
+        freqSelect.addEventListener('change', (e) => handleFrequencyUpdate(s.id, e.target.value));
+
+        // Category 2: Unit Selector
+        const unitSelect = document.createElement('select');
+        unitSelect.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-blue-500/15 border border-blue-500/30 text-sky-400 focus:outline-none cursor-pointer';
+        unitSelect.innerHTML = `
+          <option value="Cambarai" class="bg-surface-800 text-white" ${s.unit === 'Cambarai' ? 'selected' : ''}>Cambaraí</option>
+          <option value="Juquita" class="bg-surface-800 text-white" ${s.unit === 'Juquita' ? 'selected' : ''}>Juquita</option>
+        `;
+        unitSelect.addEventListener('change', (e) => handleUnitUpdate(s.id, e.target.value));
+
+        // Editable Student Name Input
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.value = s.name;
+        nameInput.className = 'bg-transparent text-sm sm:text-base font-bold text-white flex-1 min-w-[120px] border-b border-transparent focus:border-brand focus:outline-none py-0.5';
+        nameInput.addEventListener('change', (e) => handleNameUpdate(s.id, e.target.value));
+
+        topRow.append(freqSelect, unitSelect, nameInput);
+
+        // Daily / Personal Counter Box (Visible if Diária or Personal Fight)
+        const hasAttendanceBox = s.frequency === 'diaria' || s.frequency === 'personal';
+        if (hasAttendanceBox) {
+          const isPersonal = s.frequency === 'personal';
+          const counterWrap = document.createElement('div');
+          counterWrap.className = isPersonal
+            ? 'flex items-center gap-1 bg-purple-500/15 border border-purple-500/30 px-2 py-0.5 rounded-lg text-purple-300 text-xs shadow-sm'
+            : 'flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-lg text-amber-300 text-xs shadow-sm';
+          counterWrap.title = isPersonal ? 'Controle de sessões de Personal Fight' : 'Controle de aulas assistidas';
+          
+          const labelSpan = document.createElement('span');
+          labelSpan.className = 'font-bold text-[10px] tracking-wide uppercase mr-0.5';
+          labelSpan.textContent = isPersonal ? 'Sessões:' : 'Aulas:';
+
+          const decBtn = document.createElement('button');
+          decBtn.type = 'button';
+          decBtn.className = isPersonal
+            ? 'w-5 h-5 rounded bg-purple-500/20 hover:bg-purple-500/30 font-bold flex items-center justify-center text-purple-200 active:scale-95 transition'
+            : 'w-5 h-5 rounded bg-amber-500/20 hover:bg-amber-500/30 font-bold flex items-center justify-center text-amber-200 active:scale-95 transition';
+          decBtn.textContent = '-';
+          decBtn.onclick = () => updateDailyCount(s.id, -1);
+
+          const countInput = document.createElement('input');
+          countInput.type = 'number';
+          countInput.min = '0';
+          countInput.value = s.dailyCount !== undefined ? s.dailyCount : 0;
+          countInput.className = isPersonal
+            ? 'w-9 text-center bg-transparent font-black text-purple-300 focus:outline-none text-xs'
+            : 'w-9 text-center bg-transparent font-black text-amber-300 focus:outline-none text-xs';
+          countInput.onchange = (e) => setDailyCount(s.id, e.target.value);
+
+          const incBtn = document.createElement('button');
+          incBtn.type = 'button';
+          incBtn.className = isPersonal
+            ? 'w-5 h-5 rounded bg-purple-500/20 hover:bg-purple-500/30 font-bold flex items-center justify-center text-purple-200 active:scale-95 transition'
+            : 'w-5 h-5 rounded bg-amber-500/20 hover:bg-amber-500/30 font-bold flex items-center justify-center text-amber-200 active:scale-95 transition';
+          incBtn.textContent = '+';
+          incBtn.onclick = () => updateDailyCount(s.id, 1);
+
+          counterWrap.append(labelSpan, decBtn, countInput, incBtn);
+          topRow.append(counterWrap);
+        }
+
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'flex flex-wrap items-center gap-3 text-xs text-slate-400';
+        const isPersonalPlan = s.frequency === 'personal';
+        const attendanceMeta = hasAttendanceBox
+          ? (isPersonalPlan
+              ? `<span class="text-purple-400/90 font-medium">🥊 Total de sessões: <b>${s.dailyCount || 0}</b></span>`
+              : `<span class="text-amber-400/90 font-medium">⭐ Total de presenças: <b>${s.dailyCount || 0}</b></span>`)
+          : '';
+
+        metaDiv.innerHTML = `
+          <span class="flex items-center gap-1">📅 ${formatDate(s.dueDate)}</span>
+          ${s.phone ? `<span class="flex items-center gap-1 text-emerald-400">📱 ${s.phone}</span>` : ''}
+          ${attendanceMeta}
+        `;
+
+        infoDiv.append(topRow, metaDiv);
+
+        // Price Input & Status Controls
+        const actionControls = document.createElement('div');
+        actionControls.className = 'flex items-center justify-between sm:justify-end gap-2.5';
+
+        // Value Input (editable inline)
+        const valInput = document.createElement('input');
+        valInput.type = 'text';
+        valInput.value = formatCurrency(s.value);
+        valInput.className = 'w-24 text-right bg-surface-900 border border-surface-border text-sm font-bold text-white rounded-lg px-2 py-1.5 focus:outline-none focus:border-brand transition';
+        valInput.addEventListener('focus', (e) => { e.target.value = s.value; });
+        valInput.addEventListener('blur', (e) => handleValueUpdate(s.id, e.target.value));
+
+        // Toggle Status Button
+        const statusBtn = document.createElement('button');
+        statusBtn.className = s.paid
+          ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 active:scale-95 transition'
+          : 'px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30 hover:bg-rose-500/30 active:scale-95 transition';
+        statusBtn.textContent = s.paid ? '✓ Pago' : '⏳ Pendente';
+        statusBtn.onclick = () => toggleStatus(s.id);
+
+        // WhatsApp Quick Button
+        const zapBtn = document.createElement('button');
+        zapBtn.className = 'p-2 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-500/20 active:scale-95 transition';
+        zapBtn.title = 'Enviar mensagem via WhatsApp';
+        zapBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.7c.974.553 1.761.815 2.791.815 3.18 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.768-5.768-5.768zm0 10.362c-.93 0-1.802-.27-2.548-.744l-.182-.116-1.574.413.42-1.536-.127-.202c-.521-.83-.796-1.796-.795-2.777 0-2.825 2.299-5.124 5.126-5.124 2.826 0 5.125 2.299 5.125 5.124 0 2.826-2.299 5.125-5.125 5.125zm3.178-3.791c-.174-.087-1.031-.509-1.191-.567-.16-.058-.276-.087-.393.087-.116.174-.45 567-.552.684-.102.116-.203.13-.377.043-.174-.087-.735-.271-1.4-.864-.518-.462-.867-1.032-.969-1.206-.102-.174-.011-.268.076-.355.078-.078.174-.203.261-.305.087-.102.116-.174.174-.29.058-.116.029-.218-.015-.305-.044-.087-.393-.946-.538-1.296-.142-.34-.286-.294-.393-.299l-.335-.005c-.116 0-.305.044-.465.218-.16.174-.61.596-.61 1.454 0 .857.625 1.685.712 1.801.087.116 1.229 1.877 2.977 2.632.416.18.741.287.994.368.418.133.798.114 1.099.069.336-.05 1.031-.421 1.176-.827.145-.407.145-.756.102-.828-.043-.072-.16-.116-.334-.203z"/>
+          </svg>
+        `;
+        zapBtn.onclick = () => openWhatsApp(s.id);
+
+        // Delete Button
+        const delBtn = document.createElement('button');
+        delBtn.className = 'p-2 rounded-lg bg-surface-700/60 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 border border-surface-border transition active:scale-95';
+        delBtn.title = 'Excluir aluno';
+        delBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+        `;
+        delBtn.onclick = () => deleteStudent(s.id);
+
+        actionControls.append(valInput, statusBtn, zapBtn, delBtn);
+        row.append(infoDiv, actionControls);
+        container.appendChild(row);
+      });
+    }
+
+    // Storage, UI and Summary Helpers
+    function saveData() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+      } catch (e) {
+        console.error('Erro ao salvar dados:', e);
+      }
+    }
+
+    function getMonthStudents() {
+      return students.filter(s => s.dueDate && s.dueDate.startsWith(currentMonth));
+    }
+
+    function toggleStatus(id) {
+      const s = students.find(x => x.id === id);
+      if (s) {
+        s.paid = !s.paid;
+        saveData();
+        render();
+      }
+    }
+
+    function handleNameUpdate(id, newName) {
+      const s = students.find(x => x.id === id);
+      if (s && newName.trim()) {
+        s.name = newName.trim().slice(0, 80);
+        saveData();
+        updateSummary();
+      }
+    }
+
+    function handleValueUpdate(id, str) {
+      const s = students.find(x => x.id === id);
+      if (s) {
+        const num = parseFloat(String(str).replace(/[^0-9.,]/g, '').replace(',', '.'));
+        if (!isNaN(num) && num >= 0 && num < 1e7) {
+          s.value = num;
+          saveData();
+        }
+        render();
+      }
+    }
+
+    function deleteStudent(id) {
+      const s = students.find(x => x.id === id);
+      showModal({
+        title: 'Excluir Aluno',
+        message: `Deseja realmente remover ${s ? s.name : 'este aluno'}?`,
+        onConfirm: () => {
+          students = students.filter(x => x.id !== id);
+          saveData();
+          populateYearSelector();
+          render();
+        }
+      });
+    }
+
+    function openClearModal() {
+      const [y, m] = currentMonth.split('-');
+      showModal({
+        title: 'Limpar Mês Atual',
+        message: `Deseja excluir todos os alunos registrados no mês ${m}/${y}?`,
+        onConfirm: () => {
+          students = students.filter(s => !s.dueDate || !s.dueDate.startsWith(currentMonth));
+          saveData();
+          populateYearSelector();
+          render();
+        }
+      });
+    }
+
+    function showModal({ title, message, onConfirm }) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalMsg').textContent = message;
+      document.getElementById('modalConfirmBtn').onclick = () => {
+        if (typeof onConfirm === 'function') onConfirm();
+        closeModal();
+      };
+      const modal = document.getElementById('customModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('customModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        const isMatch = btn.dataset.filter === filter;
+        btn.classList.toggle('bg-brand', isMatch);
+        btn.classList.toggle('text-white', isMatch);
+        btn.classList.toggle('text-slate-400', !isMatch);
+      });
+      renderList();
+    }
+
+    function updateSummary() {
+      const monthData = getMonthStudents();
+      let paid = 0;
+      let pending = 0;
+      let pendingCount = 0;
+
+      monthData.forEach(s => {
+        const v = Number(s.value) || 0;
+        if (s.paid) {
+          paid += v;
+        } else {
+          pending += v;
+          pendingCount++;
+        }
+      });
+
+      const totalVal = paid + pending;
+      const pct = totalVal > 0 ? Math.round((paid / totalVal) * 100) : 0;
+
+      document.getElementById('totalCount').textContent = monthData.length;
+      document.getElementById('activeCounterText').textContent = `${monthData.length} ${monthData.length === 1 ? 'Aluno' : 'Alunos'}`;
+      document.getElementById('totalPaid').textContent = formatCurrency(paid);
+      document.getElementById('paidPercentageText').textContent = `${pct}% arrecadado`;
+      document.getElementById('totalPending').textContent = formatCurrency(pending);
+      document.getElementById('pendingCountText').textContent = `${pendingCount} pagamento(s) em aberto`;
+    }
+
+    function populateYearSelector() {
+      const sel = document.getElementById('chartYearSelect');
+      if (!sel) return;
+      const currentYear = String(new Date().getFullYear());
+      const years = new Set([currentYear, chartYear]);
+
+      students.forEach(s => {
+        if (s.dueDate && s.dueDate.length >= 4) {
+          years.add(s.dueDate.substring(0, 4));
+        }
+      });
+
+      sel.innerHTML = '';
+      Array.from(years).sort((a, b) => b.localeCompare(a)).forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        if (y === chartYear) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }
+
+    function onChartYearChange(val) {
+      chartYear = val;
+      renderChart();
+    }
+
+    function renderChart() {
+      const canvas = document.getElementById('revenueChart');
+      if (!canvas || typeof Chart === 'undefined') return;
+
+      const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      const paidData = new Array(12).fill(0);
+      const pendingData = new Array(12).fill(0);
+
+      students.forEach(s => {
+        if (!s.dueDate || !s.dueDate.startsWith(chartYear)) return;
+        const monthIdx = parseInt(s.dueDate.split('-')[1], 10) - 1;
+        const val = parseFloat(s.value) || 0;
+        if (monthIdx >= 0 && monthIdx < 12) {
+          if (s.paid) paidData[monthIdx] += val;
+          else pendingData[monthIdx] += val;
+        }
+      });
+
+      let maxPaid = 0;
+      let bestMonthIdx = -1;
+      paidData.forEach((val, idx) => {
+        if (val > maxPaid) {
+          maxPaid = val;
+          bestMonthIdx = idx;
+        }
+      });
+
+      const bestBadge = document.getElementById('bestMonthBadge');
+      if (maxPaid > 0 && bestMonthIdx !== -1) {
+        bestBadge.style.display = 'flex';
+        document.getElementById('bestMonthText').textContent = `${months[bestMonthIdx]}/${chartYear} com ${formatCurrency(maxPaid)} recebidos`;
+      } else {
+        bestBadge.style.display = 'none';
+      }
+
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      chartInstance = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: [
+            {
+              label: 'Recebido (R$)',
+              data: paidData,
+              backgroundColor: '#22c55e',
+              borderColor: '#16a34a',
+              borderWidth: 1,
+              borderRadius: 6
+            },
+            {
+              label: 'Pendente (R$)',
+              data: pendingData,
+              backgroundColor: 'rgba(239, 68, 68, 0.45)',
+              borderColor: '#ef4444',
+              borderWidth: 1,
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#94a3b8',
+                font: { size: 11, family: 'Inter' },
+                boxWidth: 12
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.raw)}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(42, 50, 71, 0.5)' },
+              ticks: { color: '#94a3b8', font: { size: 11 } }
+            },
+            y: {
+              grid: { color: 'rgba(42, 50, 71, 0.5)' },
+              ticks: {
+                color: '#94a3b8',
+                font: { size: 10 },
+                callback: (v) => 'R$ ' + v
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function render() {
+      updateSummary();
+      renderList();
+      renderChart();
+    }
+
+    function downloadBlob(filename, content, mime) {
+      try {
+        const blob = new Blob([content], { type: mime });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        console.error('Falha no download:', e);
+      }
+    }
+
+    // Export Data with Frequency, Unit and Daily Count
+    function exportData() {
+      const data = getMonthStudents();
+      if (!data.length) {
+        showModal({
+          title: 'Sem Dados',
+          message: 'Não existem registros neste mês para serem exportados.',
+          onConfirm: () => {}
+        });
+        return;
+      }
+
+      let csv = 'ID,Nome,Frequencia,Unidade,Aulas_Diarias,WhatsApp,Vencimento,Valor,Status\n';
+      const escape = (val) => {
+        let str = String(val);
+        if (/^[=+\-@\t\r]/.test(str)) str = "'" + str;
+        return '"' + str.replace(/"/g, '""') + '"';
+      };
+
+      data.forEach(s => {
+        const hasCount = s.frequency === 'diaria' || s.frequency === 'personal';
+        csv += [
+          escape(s.id),
+          escape(s.name),
+          escape(FREQUENCY_LABELS[s.frequency] || s.frequency),
+          escape(UNIT_LABELS[s.unit] || s.unit),
+          escape(hasCount ? (s.dailyCount || 0) : '-'),
+          escape(s.phone || ''),
+          escape(s.dueDate),
+          escape(s.value),
+          escape(s.paid ? 'Pago' : 'Pendente')
+        ].join(',') + '\n';
+      });
+
+      downloadBlob(`mensalidades_pft_${currentMonth}.csv`, csv, 'text/csv;charset=utf-8;');
+    }
+
+    function backupDatabase() {
+      const payload = {
+        app: 'Pernambuco Fight Team',
+        version: 2,
+        exportedAt: new Date().toISOString(),
+        students: students
+      };
+      downloadBlob(`backup_pft_${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(payload, null, 2), 'application/json');
+    }
+
+    function restoreDatabase(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed && Array.isArray(parsed.students)) {
+            students = sanitizeStudents(parsed.students);
+            saveData();
+            populateYearSelector();
+            render();
+            showModal({
+              title: 'Sucesso',
+              message: 'Cópia de segurança restaurada com sucesso!',
+              onConfirm: () => {}
+            });
+          } else {
+            throw new Error('Formato inválido');
+          }
+        } catch (err) {
+          showModal({
+            title: 'Erro na Restauração',
+            message: 'O arquivo JSON selecionado é inválido ou está corrompido.',
+            onConfirm: () => {}
+          });
+        }
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+  </script>
 </body>
 </html>
